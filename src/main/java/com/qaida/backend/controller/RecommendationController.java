@@ -5,8 +5,8 @@ import com.qaida.backend.service.RecommendationService;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api")
-@CrossOrigin(origins = "*") // разрешаем запросы с фронта
+@RequestMapping("/api/recommendations")
+@CrossOrigin(origins = "*")
 public class RecommendationController {
 
     private final RecommendationService service;
@@ -15,7 +15,7 @@ public class RecommendationController {
         this.service = service;
     }
 
-    @GetMapping("/recommendations")
+    @GetMapping
     public RecommendationResponse getRecommendations(@RequestParam String city) {
         return service.getRecommendations(city);
     }
