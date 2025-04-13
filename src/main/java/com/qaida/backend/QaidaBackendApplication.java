@@ -10,12 +10,6 @@ import org.springframework.web.client.RestTemplate;
 @SpringBootApplication
 public class QaidaBackendApplication {
 	@Bean
-	CommandLineRunner init(UserRepository userRepository) {
-		return args -> {
-			System.out.println("Пользователей в БД: " + userRepository.count());
-		};
-	}
-	@Bean
 	public RestTemplate restTemplate() {
 		return new RestTemplate();
 	}
