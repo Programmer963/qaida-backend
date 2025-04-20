@@ -1,6 +1,7 @@
 package com.qaida.backend.service;
 
 import com.qaida.backend.dto.LoginRequest;
+import com.qaida.backend.dto.LoginResponse;
 import com.qaida.backend.dto.RegisterRequest;
 import com.qaida.backend.entity.User;
 import com.qaida.backend.repository.UserRepository;
@@ -31,13 +32,26 @@ public class AuthService {
         return userRepository.save(user);
     }
 
-    public String login(LoginRequest request) {
-        User user = userRepository.findByEmail(request.getEmail()).orElseThrow(() -> new UsernameNotFoundException("User not found"));;
+//    public String login(LoginRequest request) {
+//        User user = userRepository.findByEmail(request.getEmail()).orElseThrow(() -> new UsernameNotFoundException("User not found"));;
+//
+//        if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
+//            throw new BadCredentialsException("Invalid credentials");
+//        }
+//
+//        return jwtUtil.generateToken(user.getEmail());
+//    }
+    // AuthService.java
+    public LoginResponse login(LoginRequest request) {
+        User user = userRepository.findByEmail(request.getEmail())
+                .orElseThrow(() -> new RuntimeException("Пользователь не найден"));
 
         if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
-            throw new BadCredentialsException("Invalid credentials");
+            throw new RuntimeException("Неверный пароль");
         }
 
-        return jwtUtil.generateToken(user.getEmail());
+        String token = jwtUtil.generateToken(user.getEmail());
+        return new LoginResponse(user.getId(), user.getCity(), token);
     }
+
 }

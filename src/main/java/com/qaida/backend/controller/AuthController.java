@@ -1,6 +1,7 @@
 package com.qaida.backend.controller;
 
 import com.qaida.backend.dto.LoginRequest;
+import com.qaida.backend.dto.LoginResponse;
 import com.qaida.backend.dto.RegisterRequest;
 import com.qaida.backend.entity.User;
 import com.qaida.backend.repository.UserRepository;
@@ -33,8 +34,8 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody @Valid LoginRequest request) {
-        String token = authService.login(request);
-        return ResponseEntity.ok(Map.of("token", token));
+        LoginResponse response = authService.login(request);
+        return ResponseEntity.ok(response);
     }
 
 }

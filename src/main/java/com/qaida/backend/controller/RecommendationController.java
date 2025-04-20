@@ -1,6 +1,6 @@
 package com.qaida.backend.controller;
 
-import com.qaida.backend.model.RecommendationResponse;
+import com.qaida.backend.dto.RecommendationResponse;
 import com.qaida.backend.service.RecommendationService;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,8 +15,12 @@ public class RecommendationController {
         this.service = service;
     }
 
-    @GetMapping
-    public RecommendationResponse getRecommendations(@RequestParam String city) {
+    @GetMapping("/city/{city}")
+    public RecommendationResponse getRecommendations(@PathVariable String city) {
         return service.getRecommendations(city);
+    }
+    @GetMapping("/address/{address}")
+    public RecommendationResponse getRecommendationsByAddress(@PathVariable String address) {
+        return service.getRecommendationsByAddress(address);
     }
 }
